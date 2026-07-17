@@ -16,6 +16,7 @@ import omikron_glb as converter
 
 GAME_ROOT = Path(r"C:\Program Files (x86)\Steam\steamapps\common\Omikron")
 ANEKBAH_3DO = GAME_ROOT / "MESHES" / "DECORS" / "Anekbah.3DO"
+ABANK_3DO = GAME_ROOT / "MESHES" / "DECORS" / "Abank.3DO"
 
 
 def _minimal_scene(*, horizontal_fov_degrees: float = 90.0) -> converter.Scene3DO:
@@ -221,6 +222,14 @@ class ConverterUnitTests(unittest.TestCase):
         self.assertEqual(converter._alpha_mode((0, 0x10, 0, 0)), ("BLEND", False))
         self.assertEqual(converter._alpha_mode((0, 0, 0, 0x20)), ("BLEND", False))
         self.assertEqual(converter._alpha_mode((0, 0x18, 0, 0)), ("BLEND", True))
+        self.assertEqual(
+            converter._alpha_mode((4, 0x50, 0x10, 0)),
+            ("OPAQUE", False),
+        )
+        self.assertEqual(
+            converter._alpha_mode((0, 0x30, 0x10, 0)),
+            ("BLEND", False),
+        )
 
     def test_png_encoding_has_valid_chunks_orientation_and_color_key(self) -> None:
         texture = converter.IndexedTexture(
@@ -273,6 +282,73 @@ class ConverterUnitTests(unittest.TestCase):
 
 
 class InstalledAnekbahIntegrationTests(unittest.TestCase):
+    def test_abank_special_mirror_uses_opaque_portable_fallback(self) -> None:
+        texture_path = ABANK_3DO.with_suffix(".3DT")
+        if not ABANK_3DO.is_file() or not texture_path.is_file():
+            self.skipTest(f"installed Abank assets not found below {GAME_ROOT}")
+
+        scene = converter.parse_3do(ABANK_3DO)
+        source_mesh = next(mesh for mesh in scene.meshes if mesh.name == "AB_mirror")
+        source_vertices = scene.vertices[
+            source_mesh.vertex_start : source_mesh.vertex_start + source_mesh.num_vertices
+        ]
+        self.assertEqual(source_mesh.flags, (4, 0x50, 0x10, 0))
+        self.assertEqual(min(vertex.alpha for vertex in source_vertices), 0.0)
+        self.assertEqual(max(vertex.alpha for vertex in source_vertices), 1.0)
+
+        glb, _stats = converter.build_glb(
+            scene,
+            converter.decode_3dt(scene, texture_path),
+            texture_path,
+            converter.ConversionOptions(
+                include_cameras=False,
+                include_lights=False,
+            ),
+        )
+        document = converter.validate_glb_bytes(glb)
+        mirror = next(mesh for mesh in document["meshes"] if mesh["name"] == "AB_mirror")
+        primitive = mirror["primitives"][0]
+        material = document["materials"][primitive["material"]]
+        self.assertEqual(material["alphaMode"], "OPAQUE")
+        self.assertFalse(material["doubleSided"])
+        self.assertFalse(material["extras"]["vertexAlphaAppliedForBlend"])
+        self.assertEqual(
+            material["extras"]["sourceVertexAlphaPreservedIn"],
+            "_OD3_ALPHA",
+        )
+        self.assertIn("special mirror pass", material["extras"]["portableAlphaFallback"])
+
+        json_length = struct.unpack_from("<I", glb, 12)[0]
+        binary_header_offset = 20 + json_length
+        binary_length, binary_type = struct.unpack_from("<II", glb, binary_header_offset)
+        self.assertEqual(binary_type, 0x004E4942)
+        binary = glb[
+            binary_header_offset + 8 : binary_header_offset + 8 + binary_length
+        ]
+
+        def accessor_bytes(accessor_name: str) -> tuple[dict, dict, int]:
+            accessor = document["accessors"][primitive["attributes"][accessor_name]]
+            view = document["bufferViews"][accessor["bufferView"]]
+            offset = view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
+            return accessor, view, offset
+
+        color_accessor, color_view, color_offset = accessor_bytes("COLOR_0")
+        color_stride = color_view.get("byteStride", 4)
+        color_alphas = {
+            binary[color_offset + index * color_stride + 3]
+            for index in range(color_accessor["count"])
+        }
+        self.assertEqual(color_alphas, {255})
+
+        raw_accessor, raw_view, raw_offset = accessor_bytes("_OD3_ALPHA")
+        raw_stride = raw_view.get("byteStride", 4)
+        raw_alphas = [
+            struct.unpack_from("<f", binary, raw_offset + index * raw_stride)[0]
+            for index in range(raw_accessor["count"])
+        ]
+        self.assertEqual(min(raw_alphas), 0.0)
+        self.assertEqual(max(raw_alphas), 1.0)
+
     def test_default_conversion_matches_known_anekbah_inventory(self) -> None:
         if not ANEKBAH_3DO.is_file() or not ANEKBAH_3DO.with_suffix(".3DT").is_file():
             self.skipTest(f"installed Anekbah assets not found below {GAME_ROOT}")
