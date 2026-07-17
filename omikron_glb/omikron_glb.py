@@ -738,11 +738,28 @@ def _minmax_vec3(values: Sequence[Sequence[float]]) -> tuple[list[float], list[f
     )
 
 
+def _uses_opaque_special_mirror_fallback(flags: Sequence[int]) -> bool:
+    # DECORS flag byte 2 value 0x50 is the special 0x40 pass combined with the
+    # usual 0x10 alpha bit.  When packed flag bit 20 also marks the mesh as a
+    # mirror, the authored vertex alpha modulates the unavailable mirror pass;
+    # treating it as ordinary surface opacity turns zero-valued mirror vertices
+    # into holes.  Keep the portable base surface opaque while preserving the
+    # original float in _OD3_ALPHA.
+    return bool((flags[1] & 0x40) and (flags[2] & 0x10))
+
+
 def _alpha_mode(flags: Sequence[int]) -> tuple[str, bool]:
     # Eric Morin's format notes identify byte 2 bit 3 as opacity mask and
-    # byte 2 bit 4 as transparency.  Water is byte 4 bit 5.
+    # byte 2 bit 4 as transparency.  Water is byte 4 bit 5.  The special
+    # mirror/reflection pass is handled as an opaque portable fallback above.
     has_mask = bool(flags[1] & 0x08)
-    has_blend = bool((flags[1] & 0x10) or (flags[3] & 0x20))
+    has_blend = bool(
+        (
+            (flags[1] & 0x10)
+            and not _uses_opaque_special_mirror_fallback(flags)
+        )
+        or (flags[3] & 0x20)
+    )
     if has_blend:
         return "BLEND", has_mask
     if has_mask:
@@ -849,6 +866,7 @@ def build_glb(
         source_index: int, mesh_flags: tuple[int, int, int, int]
     ) -> int:
         alpha_mode, keyed = _alpha_mode(mesh_flags)
+        opaque_special_mirror = _uses_opaque_special_mirror_fallback(mesh_flags)
         cache_key = (source_index, mesh_flags)
         if cache_key in gltf_material_cache:
             return gltf_material_cache[cache_key]
@@ -905,6 +923,13 @@ def build_glb(
                 "vertexAlphaSource": (
                     "OD3X vertex float at byte offset 24"
                     if alpha_mode == "BLEND"
+                    else None
+                ),
+                "sourceVertexAlphaPreservedIn": "_OD3_ALPHA",
+                "portableAlphaFallback": (
+                    "opaque base surface because the source special mirror pass "
+                    "is not representable in core glTF"
+                    if opaque_special_mirror
                     else None
                 ),
                 "unsupportedPortableEffects": [

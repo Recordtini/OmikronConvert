@@ -388,6 +388,13 @@ metadata, and the best currently known mapping of explicit lights. Coordinates
 are right-handed, Y-up glTF at `0.025` meters per game unit (40 game units per
 meter).
 
+Special `0x40` mirror-pass meshes such as Abank's `AB_mirror` use an opaque
+portable base surface. Their original vertex-alpha floats remain available in
+`_OD3_ALPHA`, but are not copied into `COLOR_0.a`: without the game's missing
+mirror/reflection pass, treating those values as ordinary opacity incorrectly
+punches holes through the mirror. Ordinary glass, masked geometry, water, and
+non-mirror effects retain the existing alpha policy.
+
 `--lighting baked` is the fidelity target. Materials use
 `KHR_materials_unlit`, with decoded texture multiplied by original `COLOR_0`
 baked-light RGB. Source punctual-light nodes remain in the exterior GLB, but
@@ -419,7 +426,7 @@ does not bake those Blender-only additions into the source-oriented geometry.
 
 ## Validation snapshot
 
-The current `Anekbah_complete.glb` is 54,480,276 bytes and contains:
+The current `Anekbah_complete.glb` is 54,556,184 bytes and contains:
 
 - 82 sources: one exterior plus 81 canonical interiors.
 - 3,459 resource meshes and 5,730 resource primitives, retained for complete
@@ -470,6 +477,10 @@ triangles.
 - **Sprite rendering:** the exact runtime blend equation and sprite-type
   meanings remain unresolved. Blender's visible, dark-halo-safe treatment is an
   approximation and is labeled accordingly.
+- **Mirror rendering:** core glTF does not reproduce the game's special mirror
+  pass or planar reflection. Special mirror surfaces use their opaque textured
+  base as a conservative fallback, with raw source alpha and flags retained for
+  a future reflection implementation.
 - **Sky/day-night behavior:** `Asky.glb` is exact bounded source geometry, but
   the engine's expansion, cloud motion, and full day/night controller are not
   decoded. The final scene omits the plane rather than presenting it incorrectly.
@@ -485,7 +496,7 @@ triangles.
 
 ## Development checks
 
-Run both regression suites directly. The current combined suite contains 13
+Run both regression suites directly. The current combined suite contains 14
 tests:
 
 ```powershell
