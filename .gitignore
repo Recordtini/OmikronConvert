@@ -1,0 +1,27 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+exports/
+previews/
+previews_*/
+*.glb
+*.gltf
+*.bin
+*.blend
+*.blend[0-9]
+*.report.json
+
+# Original game data must remain local.
+*.3DO
+*.3do
+*.3DT
+*.3dt
+*.SCX
+*.scx
+*.IAM
+*.iam
+
+*.zip
+*.7z

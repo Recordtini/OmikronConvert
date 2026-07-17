@@ -1,0 +1,424 @@
+{
+  "$schema": "omikron-composition-manifest-v1",
+  "level": "Anekbah",
+  "path_base": "game_install_root",
+  "path_format": "forward_slash",
+  "contains_game_payload": false,
+  "source_files": {
+    "area_archive": "IAM/AREA",
+    "area_tags": "IAM/AREAS.TAG",
+    "scene_archive": "IAM/SCENE",
+    "scene_tags": "IAM/SCENES.TAG",
+    "decor_model": "MESHES/DECORS/Anekbah.3DO",
+    "decor_textures": "MESHES/DECORS/Anekbah.3DT",
+    "sky_model": "MESHES/MISC/Asky.3DO",
+    "sky_textures": "MESHES/MISC/Asky.3DT",
+    "script": "SCPTDATA/anekbah.SCX",
+    "effects": "SCPTDATA/anekbah.sfx",
+    "trajectories": "TRAJECTOIRES/anekbah.opt",
+    "passer_animation": "ANIMS/passantH.ani"
+  },
+  "iam_area": {
+    "tag_index": 0,
+    "tag_value": "Anekbah",
+    "archive_entry_offset": "0x1000",
+    "archive_entry_length": "0x6FD4",
+    "slot_offset_base": "area_entry",
+    "resource_slots": [
+      {
+        "offset": "0x58",
+        "role": "decor",
+        "stored_stem": "ANEKBAH",
+        "resolved_path": "MESHES/DECORS/Anekbah.3DO",
+        "classification": "static"
+      },
+      {
+        "offset": "0x61",
+        "role": "script",
+        "stored_stem": "ANEKBAH",
+        "resolved_path": "SCPTDATA/anekbah.SCX",
+        "companion_path": "SCPTDATA/anekbah.sfx",
+        "classification": "scripted"
+      },
+      {
+        "offset": "0x6A",
+        "role": "mpt",
+        "stored_stem": "",
+        "resolved_path": null,
+        "classification": "scripted"
+      },
+      {
+        "offset": "0x73",
+        "role": "trajectories",
+        "stored_stem": "ANEKBAH",
+        "resolved_path": "TRAJECTOIRES/anekbah.opt",
+        "classification": "scripted"
+      },
+      {
+        "offset": "0x7C",
+        "role": "passer_animation",
+        "stored_stem": "PASSANTH",
+        "resolved_path": "ANIMS/passantH.ani",
+        "classification": "scripted"
+      },
+      {
+        "offset": "0x85",
+        "role": "sky",
+        "stored_stem": "ASKY",
+        "resolved_path": "MESHES/MISC/Asky.3DO",
+        "classification": "static"
+      }
+    ]
+  },
+  "required_baseline_assets": [
+    {
+      "model": "MESHES/DECORS/Anekbah.3DO",
+      "texture_container": "MESHES/DECORS/Anekbah.3DT",
+      "role": "world_geometry",
+      "classification": "static",
+      "export_by_default": true
+    },
+    {
+      "model": "MESHES/MISC/Asky.3DO",
+      "texture_container": "MESHES/MISC/Asky.3DT",
+      "role": "camera_centered_sky",
+      "classification": "static",
+      "export_by_default": true,
+      "render_semantics": "Keep centered on the active camera; do not apply the source mesh position as an ordinary world placement.",
+      "embedded_bitmap": "CIEL3.BMP",
+      "source_bitmap_name": "IRMALY1.BMP"
+    },
+    {
+      "path": "SCPTDATA/anekbah.SCX",
+      "role": "embedded_effect_models_and_script_state",
+      "classification": "scripted",
+      "export_by_default": false
+    },
+    {
+      "path": "SCPTDATA/anekbah.sfx",
+      "role": "effect_definitions_and_anchor_bindings",
+      "classification": "scripted",
+      "export_by_default": false
+    },
+    {
+      "path": "TRAJECTOIRES/anekbah.opt",
+      "role": "npc_routes",
+      "classification": "scripted",
+      "export_by_default": false
+    },
+    {
+      "path": "ANIMS/passantH.ani",
+      "role": "npc_passer_animation",
+      "classification": "scripted",
+      "export_by_default": false
+    }
+  ],
+  "scx_embedded_effects": {
+    "container": "SCPTDATA/anekbah.SCX",
+    "external_scene_section_offset": "0xF7B2",
+    "external_scene_count": 3,
+    "blob_descriptor_layout": [
+      "self_offset_u32",
+      "model_3do_length_u32",
+      "texture_3dt_length_u32"
+    ],
+    "effects": [
+      {
+        "key": "smoke",
+        "external_name": "EFFECTS2_SMOKE1.3DO",
+        "external_scene_record_offset": "0xF7BA",
+        "runtime_handle": "0xC1B5",
+        "blob_descriptor_offset": "0x36486E",
+        "model_offset": "0x36487A",
+        "model_length": "0x5C4",
+        "texture_offset": "0x364E3E",
+        "texture_length": "0x437E",
+        "blob_end_exclusive": "0x3691BC",
+        "material": "EFFECTS2",
+        "embedded_bitmap": "EFFECTS2.BMP",
+        "classification": "persistent",
+        "animation_frames": {
+          "count": 8,
+          "geometry_layout": "one horizontal row of eight adjacent quads",
+          "runtime_behavior": "Select one quad over particle age; do not render the complete strip as one billboard."
+        },
+        "render_semantics": [
+          "alpha_test",
+          "alpha_blend",
+          "camera_facing_3d_sprite",
+          "runtime_sprite_blend_equation_unresolved"
+        ]
+      },
+      {
+        "key": "glow",
+        "external_name": "EFFECTS2_GLOW.3DO",
+        "external_scene_record_offset": "0xF7DE",
+        "runtime_handle": "0xC1B6",
+        "blob_descriptor_offset": "0x3691BC",
+        "model_offset": "0x3691C8",
+        "model_length": "0x358",
+        "texture_offset": "0x369520",
+        "texture_length": "0x437E",
+        "blob_end_exclusive": "0x36D89E",
+        "material": "EFFECTS2",
+        "embedded_bitmap": "EFFECTS2.BMP",
+        "classification": "persistent",
+        "animation_frames": {
+          "count": 1,
+          "geometry_layout": "one quad",
+          "runtime_behavior": "Single camera-facing glow sprite."
+        },
+        "render_semantics": [
+          "alpha_test",
+          "alpha_blend",
+          "camera_facing_3d_sprite",
+          "runtime_sprite_blend_equation_unresolved"
+        ]
+      },
+      {
+        "key": "explosion",
+        "external_name": "EFFECTS1_EXPLO1.3DO",
+        "external_scene_record_offset": "0xF802",
+        "runtime_handle": "0xC1B7",
+        "blob_descriptor_offset": "0x36D89E",
+        "model_offset": "0x36D8AA",
+        "model_length": "0x7E4",
+        "texture_offset": "0x36E08E",
+        "texture_length": "0x67DF",
+        "blob_end_exclusive": "0x37486D",
+        "material": "EFFECTS1",
+        "embedded_bitmap": "EFFECTS1.BMP",
+        "classification": "scripted",
+        "animation_frames": {
+          "count": 16,
+          "geometry_layout": "two rows of eight adjacent quads",
+          "runtime_behavior": "Select one quad over particle age; do not render the complete atlas as one billboard."
+        },
+        "render_semantics": [
+          "alpha_test",
+          "alpha_blend",
+          "camera_facing_3d_sprite",
+          "runtime_sprite_blend_equation_unresolved"
+        ]
+      }
+    ]
+  },
+  "sfx": {
+    "container": "SCPTDATA/anekbah.sfx",
+    "version_marker": "5.0V",
+    "definition_table": {
+      "count_offset": "0x0C",
+      "count": 20,
+      "records_offset": "0x10",
+      "record_size": "0x50",
+      "fields": {
+        "definition_id": "record+0x00:u32",
+        "sound_resource_id": "record+0x04:u32; 0xFFFF means none",
+        "runtime_handle": "record+0x08:u32",
+        "behavior_flags": "record+0x0C:u32",
+        "launch_vector": "record+0x10:3*f32; direction and speed, not placement offset",
+        "y_acceleration_magnitude": "record+0x1C:f32; sign selected by flags",
+        "particle_lifetime": "record+0x20:f32",
+        "sound_start_delay": "record+0x24:f32",
+        "particle_start_delay": "record+0x28:f32",
+        "padding_0x2c": "record+0x2C:u32",
+        "initial_color": "record+0x30:packed RGB",
+        "terminal_color": "record+0x34:packed RGB",
+        "initial_uniform_scale": "record+0x38:f32; dimensionless",
+        "polar_cone_angle_degrees": "record+0x3C:f32",
+        "sprite_roll_rate": "record+0x40:f32; degrees per engine time unit",
+        "particles_per_burst": "record+0x44:u16",
+        "short_name": "record+0x46:ascii[8]",
+        "sprite_type": "record+0x4E:i8",
+        "padding_0x4f": "record+0x4F:u8"
+      },
+      "runtime_evidence": {
+        "table_parser_va": "0x0044F6B0-0x0044F6E3",
+        "particle_create_update_va": "0x0046DB80-0x0046E398",
+        "frame_selection_and_sprite_type_va": "0x0048EF10-0x0048EF59",
+        "frame_selection": "The runtime selects one effect-model quad over particle age. Adjacent quads are animation frames, not simultaneous geometry.",
+        "model_cameras_used": false,
+        "blend_caveat": "The exact meanings of sprite types 4, 5, and 6 and the final sprite blend equation remain unresolved."
+      },
+      "confirmed_flag_behavior": {
+        "0x0001": "lifetime gets +U*0.1*lifetime",
+        "0x0002": "changes an internal scalar from rate=0,initial=0.5 to rate=1/lifetime,initial=0; visual meaning unresolved",
+        "0x0004": "uniform scale rate is +scale/lifetime",
+        "0x0010": "random initial roll over 0..2*pi",
+        "0x0040": "randomize each launch-vector component as base+2*rand/32767",
+        "0x0100": "enables lifetime variance",
+        "0x0600_zero": "Y acceleration is negative when (flags&0x0600)==0",
+        "0x0600_0200": "Y acceleration is positive when (flags&0x0600)==0x0200",
+        "0x1000": "polar angle becomes base+U*base",
+        "0x2000": "scale rate is -scale/lifetime when positive-scale bit 0x0004 is absent",
+        "0x4000": "additional nearby-object/sound operation; exact semantic name unresolved"
+      },
+      "handle_effect_map": {
+        "0xC1B5": "smoke",
+        "0xC1B6": "glow",
+        "0xC1B7": "explosion"
+      },
+      "definitions": [
+        { "record_offset": "0x0010", "id": 1, "name": "aven", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11B4", "launch_vector": [0.727606893, 0.0, 2.91042757], "y_acceleration": 0.5859375, "lifetime": 30.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0060", "id": 2, "name": "bven", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11F4", "launch_vector": [5.0, 0.0, 0.0], "y_acceleration": 0.29296875, "lifetime": 30.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 35.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x00B0", "id": 3, "name": "even", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11F4", "launch_vector": [4.0, 0.0, 0.0], "y_acceleration": 0.29296875, "lifetime": 30.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0100", "id": 5, "name": "neon", "effect": "glow", "handle": "0xC1B6", "flags": "0x0000", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.0, "lifetime": 1.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.5, "cone_degrees": 0.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0150", "id": 6, "name": "agaz", "effect": "explosion", "handle": "0xC1B7", "flags": "0x11F4", "launch_vector": [0.0, -2.0, 0.0], "y_acceleration": 0.48828125, "lifetime": 23.0, "initial_color_rgb": "111111", "terminal_color_rgb": "58889A", "initial_scale": 0.599999905, "cone_degrees": 3.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 5 },
+        { "record_offset": "0x01A0", "id": 7, "name": "agri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x1050", "launch_vector": [-0.576148331, -10.8258772, -1.86237442], "y_acceleration": 0.59375, "lifetime": 15.0, "initial_color_rgb": "888888", "terminal_color_rgb": "777777", "initial_scale": 2.20000005, "cone_degrees": 15.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x01F0", "id": 8, "name": "bgri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x13F4", "launch_vector": [0.0, 1.0, 0.0], "y_acceleration": 0.390625, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 0.700000048, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0240", "id": 10, "name": "dgri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11F4", "launch_vector": [0.0, 1.49857569, -3.70867515], "y_acceleration": 0.390625, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0290", "id": 11, "name": "egri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x13F4", "launch_vector": [0.0, 3.0, 0.0], "y_acceleration": 0.5859375, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x02E0", "id": 12, "name": "fgri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x13F4", "launch_vector": [0.0, 5.0, 0.0], "y_acceleration": 0.390625, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.20000017, "cone_degrees": 15.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0330", "id": 13, "name": "ggri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x13B4", "launch_vector": [-0.887192786, 1.79245341, 0.0], "y_acceleration": 0.390625, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 6.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0380", "id": 14, "name": "hgri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x13F4", "launch_vector": [0.0, 3.0, 0.0], "y_acceleration": 0.5859375, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x03D0", "id": 15, "name": "igri", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11F4", "launch_vector": [0.0, 2.83533978, 2.82149768], "y_acceleration": 0.5859375, "lifetime": 20.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 1.0, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0420", "id": 4, "name": "egou", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11B4", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.9765625, "lifetime": 15.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 0.900000095, "cone_degrees": 75.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0470", "id": 9, "name": "tirmeca", "effect": "smoke", "handle": "0xC1B5", "flags": "0x1014", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.0, "lifetime": 15.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 0.600000024, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x04C0", "id": 16, "name": "plaf", "effect": "explosion", "handle": "0xC1B7", "flags": "0x3210", "launch_vector": [0.0, -15.0, 0.0], "y_acceleration": 1.11328125, "lifetime": 15.0, "initial_color_rgb": "322323", "terminal_color_rgb": "566556", "initial_scale": 1.80000031, "cone_degrees": 120.0, "roll_rate": 0.0, "burst_count": 8, "sprite_type": 4 },
+        { "record_offset": "0x0510", "id": 17, "name": "yup", "effect": "smoke", "handle": "0xC1B5", "flags": "0x1014", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.0, "lifetime": 6.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 0.200000018, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 4 },
+        { "record_offset": "0x0560", "id": 18, "name": "fumb", "effect": "smoke", "handle": "0xC1B5", "flags": "0x11B4", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.48828125, "lifetime": 15.0, "initial_color_rgb": "FFFFFF", "terminal_color_rgb": "FFFFFF", "initial_scale": 0.200000018, "cone_degrees": 30.0, "roll_rate": 0.0, "burst_count": 1, "sprite_type": 6 },
+        { "record_offset": "0x05B0", "id": 19, "name": "cac0a", "effect": "glow", "handle": "0xC1B6", "flags": "0x0004", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.0, "lifetime": 1.0, "initial_color_rgb": "898989", "terminal_color_rgb": "FFFFFF", "initial_scale": 2.69999981, "cone_degrees": 0.0, "roll_rate": 1.0, "burst_count": 2, "sprite_type": 4 },
+        { "record_offset": "0x0600", "id": 20, "name": "cacC", "effect": "glow", "handle": "0xC1B6", "flags": "0x0004", "launch_vector": [0.0, 0.0, 0.0], "y_acceleration": 0.0, "lifetime": 2.0, "initial_color_rgb": "FF1222", "terminal_color_rgb": "FF1222", "initial_scale": 1.80000043, "cone_degrees": 0.0, "roll_rate": 0.0, "burst_count": 2, "sprite_type": 4 }
+      ]
+    },
+    "anchor_table": {
+      "count_offset": "0x650",
+      "count": 30,
+      "records_offset": "0x654",
+      "record_size": "0x10",
+      "fields": [
+        "effect_id:u32",
+        "mesh_name_prefix:ascii[4]",
+        "emitter_lifetime:f32",
+        "repeat_interval:f32"
+      ],
+      "emitter_lifetime_sentinel": {
+        "raw_u32": "0x4B18967F",
+        "float": 9999999.0,
+        "meaning": "Effectively infinite ambient-emitter lifetime; all 30 anchor records use this value."
+      },
+      "runtime_evidence": {
+        "anchor_binding_va": "0x0044F98A-0x0044FA67",
+        "lifetime_interval_update_va": "0x0044FCB1-0x0044FE35",
+        "zero_interval": "Emit one burst on every effect-system update while active and within distance culling.",
+        "positive_interval": "Start at randomized phase rand()%int(interval), then repeat at that interval."
+      },
+      "binding_rule": {
+        "anchor_source": "MESHES/DECORS/Anekbah.3DO",
+        "match": "Case-insensitive comparison of mesh_name_prefix with the first four characters of each decor mesh name.",
+        "placement": "Use the matched decor object's world position and retain the decor mesh. There is no per-anchor scale, offset, or rotation; apply the selected definition's initial_uniform_scale. Launch vectors drive particle motion and are not placement offsets.",
+        "unmatched_policy": "Record as unresolved; do not place at the origin."
+      }
+    },
+    "verified_anchor_groups": [
+      {
+        "layer": "persistent",
+        "effect": "smoke",
+        "bindings": [
+          { "effect_id": 1, "prefix": "aven", "anchor_count": 1 },
+          { "effect_id": 2, "prefix": "bven", "anchor_count": 1 },
+          { "effect_id": 3, "prefix": "even", "anchor_count": 1 },
+          { "effect_id": 4, "prefix": "egou", "anchor_count": 0 },
+          { "effect_id": 7, "prefix": "agri", "anchor_count": 2 },
+          { "effect_id": 8, "prefix": "bgri", "anchor_count": 2 },
+          { "effect_id": 10, "prefix": "dgri", "anchor_count": 2 },
+          { "effect_id": 11, "prefix": "egri", "anchor_count": 5 },
+          { "effect_id": 12, "prefix": "fgri", "anchor_count": 1 },
+          { "effect_id": 13, "prefix": "ggri", "anchor_count": 6 },
+          { "effect_id": 14, "prefix": "hgri", "anchor_count": 2 },
+          { "effect_id": 15, "prefix": "igri", "anchor_count": 1 }
+        ]
+      },
+      {
+        "layer": "persistent",
+        "effect": "glow",
+        "bindings": [
+          { "effect_id": 5, "prefix": "neon", "anchor_count": 102 }
+        ]
+      },
+      {
+        "layer": "scripted",
+        "effect": "glow",
+        "role": "cargo_variants",
+        "bindings": [
+          { "effect_id": 19, "prefixes": ["CA0A", "CA0B", "CA1A", "CA1B", "CA2A", "CA2B", "CA3A", "CA3B", "CA4A", "CA4B"], "anchor_count": 10, "repeat_interval": 0.0 },
+          { "effect_id": 20, "prefix": "CA0C", "anchor_count": 1, "repeat_interval": 35.0 },
+          { "effect_id": 20, "prefix": "CA1C", "anchor_count": 1, "repeat_interval": 28.0 },
+          { "effect_id": 20, "prefix": "CA2C", "anchor_count": 1, "repeat_interval": 16.0 },
+          { "effect_id": 20, "prefix": "CA3C", "anchor_count": 1, "repeat_interval": 55.0 },
+          { "effect_id": 20, "prefix": "CA4C", "anchor_count": 1, "repeat_interval": 3.0 }
+        ]
+      },
+      {
+        "layer": "scripted",
+        "effect": "explosion",
+        "bindings": [
+          { "effect_id": 0, "prefix": "AGAZ", "anchor_count": 12, "note": "Special/default table ID; the named agaz definition is ID 6." },
+          { "effect_id": 6, "prefix": "afum", "anchor_count": 12 },
+          { "effect_id": 16, "prefix": "plaf", "anchor_count": 0, "note": "Defined but absent from the 30-record prefix table." }
+        ]
+      }
+    ]
+  },
+  "layers": {
+    "static": {
+      "include": [
+        "MESHES/DECORS/Anekbah.3DO",
+        "MESHES/DECORS/Anekbah.3DT",
+        "MESHES/MISC/Asky.3DO",
+        "MESHES/MISC/Asky.3DT"
+      ],
+      "notes": "Opaque world geometry and camera-centered sky."
+    },
+    "persistent": {
+      "include": [
+        "SCPTDATA/anekbah.SCX#EFFECTS2_SMOKE1.3DO",
+        "SCPTDATA/anekbah.SCX#EFFECTS2_GLOW.3DO"
+      ],
+      "bindings": [
+        "vent_and_grille_smoke",
+        "neon_glow"
+      ],
+      "notes": "Ambient billboard effects placed from verified SFX-to-decor anchor bindings."
+    },
+    "scripted": {
+      "include": [
+        "SCPTDATA/anekbah.SCX#EFFECTS1_EXPLO1.3DO",
+        "SCPTDATA/anekbah.sfx",
+        "TRAJECTOIRES/anekbah.opt",
+        "ANIMS/passantH.ani",
+        "MESHES/OBJETS/PASSLAHO.3DO",
+        "MESHES/PERSOS/FSH_FN.3DO",
+        "MESHES/PERSOS/FSH1_FN.3DO",
+        "MESHES/PERSOS/PSH_FN.3DO",
+        "MESHES/PERSOS/PSH1_FN.3DO",
+        "MESHES/PERSOS/MCG_FN.3DO",
+        "MESHES/PERSOS/ANO_FN.3DO"
+      ],
+      "area_population": {
+        "object_count": 1,
+        "object": "MESHES/OBJETS/PASSLAHO.3DO",
+        "actor_count": 28,
+        "actor_model_counts": {
+          "MESHES/PERSOS/FSH_FN.3DO": 5,
+          "MESHES/PERSOS/FSH1_FN.3DO": 3,
+          "MESHES/PERSOS/PSH_FN.3DO": 8,
+          "MESHES/PERSOS/PSH1_FN.3DO": 6,
+          "MESHES/PERSOS/MCG_FN.3DO": 5,
+          "MESHES/PERSOS/ANO_FN.3DO": 1
+        }
+      },
+      "scene_overlays": {
+        "source": "IAM/SCENE",
+        "classification": "scripted",
+        "export_by_default": false,
+        "notes": "Narrative scenes add state-specific actors and items; they are not baseline Anekbah dressing."
+      },
+      "notes": "Gameplay objects, population, cargo variants, explosions, routes, animations, narrative overlays, and dynamic character shadows are excluded from the default static composition."
+    }
+  },
+  "default_export_layers": [
+    "static",
+    "persistent"
+  ]
+}

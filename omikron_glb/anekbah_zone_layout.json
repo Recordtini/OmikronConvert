@@ -1,0 +1,111 @@
+{
+  "$schema": "omikron-anekbah-zone-layout-v1",
+  "level": "Anekbah",
+  "enabled": true,
+  "purpose": "Separate local-coordinate teleport interiors from the exterior-connected Anekbah world for collision-free inspection.",
+  "selection": {
+    "method": "door/portal connectivity graph from the canonical 81-interior composition",
+    "exteriorConnectedInteriors": 73,
+    "relocatedInteriors": 8,
+    "relocatedExplicitLights": 201,
+    "zones": 7,
+    "rule": "Relocate interiors with no door/portal path to the exterior; keep the Gandhar cave and its SAS in one zone."
+  },
+  "placement": {
+    "layout": "three-column inspection grid east of the exterior",
+    "targetCentersBlenderXYMeters": [
+      [650.0, -250.0],
+      [900.0, -250.0],
+      [1150.0, -250.0],
+      [650.0, 0.0],
+      [900.0, 0.0],
+      [1150.0, 0.0],
+      [650.0, 250.0]
+    ],
+    "verticalPolicy": "Translate each zone so its authored Blender-space minimum Z is 0 meters.",
+    "glbToBlenderTranslationRule": "Blender XYZ = (glTF X, -glTF Z, glTF Y).",
+    "exteriorBoundsBlenderMeters": {
+      "minimum": [-84.97036, -322.71722, -4.54127],
+      "maximum": [409.92728, 128.66661, 62.16262]
+    }
+  },
+  "zones": [
+    {
+      "id": "shooting_gallery",
+      "label": "Shooting Gallery",
+      "stems": ["A_shootg"],
+      "translationBlenderMeters": [507.014923096, -176.385067177, 380.544702148],
+      "translationGlbMeters": [507.014923096, 380.544702148, 176.385067177],
+      "finalBoundsBlenderMeters": {
+        "minimum": [615.647, -269.878, 0.0],
+        "maximum": [684.353, -230.122, 74.249]
+      }
+    },
+    {
+      "id": "apartment_den",
+      "label": "Den Apartment",
+      "stems": ["Aapden"],
+      "translationBlenderMeters": [883.845415783, -319.896378708, 0.134929848],
+      "translationGlbMeters": [883.845415783, 0.134929848, 319.896378708],
+      "finalBoundsBlenderMeters": {
+        "minimum": [883.349, -329.666, 0.0],
+        "maximum": [916.651, -170.334, 6.296]
+      }
+    },
+    {
+      "id": "apartment_jenna",
+      "label": "Jenna Apartment",
+      "stems": ["Aapjenna"],
+      "translationBlenderMeters": [1120.795231724, -243.700033569, 0.149623108],
+      "translationGlbMeters": [1120.795231724, 0.149623108, 243.700033569],
+      "finalBoundsBlenderMeters": {
+        "minimum": [1137.179, -255.403, 0.0],
+        "maximum": [1162.821, -244.597, 3.091]
+      }
+    },
+    {
+      "id": "apartment_kayl",
+      "label": "Kayl Apartment",
+      "stems": ["Aapkayl"],
+      "translationBlenderMeters": [511.524715042, 16.647277164, 33.019934635],
+      "translationGlbMeters": [511.524715042, 33.019934635, -16.647277164],
+      "finalBoundsBlenderMeters": {
+        "minimum": [584.169, -14.362, 0.0],
+        "maximum": [715.831, 14.362, 12.358]
+      }
+    },
+    {
+      "id": "gandhar_cave",
+      "label": "Gandhar Cave and SAS",
+      "stems": ["ACSgrot", "ACSgrots"],
+      "translationBlenderMeters": [880.267692566, -12.089210510, 5.010084534],
+      "translationGlbMeters": [880.267692566, 5.010084534, 12.089210510],
+      "finalBoundsBlenderMeters": {
+        "minimum": [860.034, -31.821, 0.0],
+        "maximum": [939.966, 31.821, 16.430]
+      }
+    },
+    {
+      "id": "impasse_connector",
+      "label": "Impasse SAS",
+      "stems": ["AImpasas"],
+      "translationBlenderMeters": [955.452667236, -79.400805664, -1.968310547],
+      "translationGlbMeters": [955.452667236, -1.968310547, 79.400805664],
+      "finalBoundsBlenderMeters": {
+        "minimum": [1140.828, -8.671, 0.0],
+        "maximum": [1159.172, 8.671, 21.645]
+      }
+    },
+    {
+      "id": "shared_apartment",
+      "label": "Jorg, Samyaza, and Zaor Shared Apartment Shell",
+      "stems": ["Shunabku"],
+      "translationBlenderMeters": [626.265800476, 252.297434139, 0.012114716],
+      "translationGlbMeters": [626.265800476, 0.012114716, -252.297434139],
+      "finalBoundsBlenderMeters": {
+        "minimum": [641.056, 244.576, 0.0],
+        "maximum": [658.944, 255.424, 3.137]
+      }
+    }
+  ]
+}
